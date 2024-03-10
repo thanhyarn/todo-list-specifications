@@ -35,6 +35,7 @@ h1 {
 .TodoForm {
   width: 100%;
   margin-bottom: 1rem;
+  /* display: flex; */
 }
 
 .todo-input {

@@ -14,7 +14,7 @@ export const TodoWrapper = () => {
   const [isActive, setIsActive] = useState(false);
 
   const addSpecification = () => {
-    if (key == "" || value == "") {
+    if (key == "") {
       toast.error("Please complete all information", { position: "top-right" });
     } else {
       const isDuplicateKey = todos.some((todo) => todo.key === key);
@@ -22,7 +22,7 @@ export const TodoWrapper = () => {
       if (isDuplicateKey) {
         toast.error("Duplicate key found!", { position: "top-right" });
       } else {
-        setTodos([...todos, { key, value }]);
+        setTodos([...todos, { key, value, isEditing: false }]);
         toast.success("Successfully", { position: "top-right" });
       }
     }
@@ -50,6 +50,23 @@ export const TodoWrapper = () => {
     toast.success("Deleted successfully", { position: "top-right" });
   };
 
+  const editTodo = (id) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.key === id ? { ...todo, isEditing: !todo.isEditing } : todo
+      )
+    );
+  };
+
+  const editTask = (task, id) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id
+          ? { ...todo, value: task, isEditing: !todo.isEditing }
+          : todo
+      )
+    );
+  };
   return (
     <>
       <div className="TodoWrapper">
@@ -100,7 +117,7 @@ export const TodoWrapper = () => {
                 <FontAwesomeIcon
                   className="edit-icon"
                   icon={faPenToSquare}
-                  onClick={() => editTodo(task.id)}
+                  onClick={() => editTodo(todo.key)}
                 />
                 <FontAwesomeIcon
                   className="delete-icon"
